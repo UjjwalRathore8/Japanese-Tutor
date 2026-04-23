@@ -1,0 +1,54 @@
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Dashboard | Learning Platform</title>
+    
+    <!-- CSS link for Spring Boot static folder -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="app-container">
+    <!-- Header Section -->
+    <div class="header-card">
+        <div class="welcome-area">
+            <h1>Welcome, <span id="userNameDisplay">Member</span></h1>
+            <p><span class="status-dot"></span> Dashboard · Learning Center</p>
+        </div>
+        <div class="action-buttons">
+            <button class="btn-secondary" id="resultsBtn">My Results</button>
+            <button class="btn-secondary btn-logout" id="logoutBtn">Logout</button>
+        </div>
+    </div>
+
+    <!-- Lessons Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2>All Lessons</h2>
+            <span class="section-badge">Structured content</span>
+        </div>
+        <div id="lessonsContainer">
+            <div class="loading-skeleton"></div>
+        </div>
+    </div>
+
+    <!-- Quizzes Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2>All Quizzes</h2>
+            <span class="section-badge">Knowledge checks</span>
+        </div>
+        <div id="quizzesContainer">
+            <div class="loading-skeleton"></div>
+        </div>
+    </div>
+
+  
+</div>
+
+<!-- JavaScript link for Spring Boot static folder -->
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

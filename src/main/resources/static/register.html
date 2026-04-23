@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+    <!-- CSS link for Spring Boot static folder -->
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Register</h2>
+
+    <input id="name" type="text" placeholder="Full Name" autocomplete="off">
+    <input id="email" type="email" placeholder="Email" autocomplete="off">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="register()">Register</button>
+
+    <div id="messageArea" class="message-area"></div>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="/login.html">Login here</a>
+    </div>
+</div>
+
+<!-- JavaScript link for Spring Boot static folder -->
+<script src="/js/register.js"></script>
+</body>
+</html>

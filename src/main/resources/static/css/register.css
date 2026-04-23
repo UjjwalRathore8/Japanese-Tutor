@@ -1,0 +1,118 @@
+/* Clean, classic design - matching login page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #eef2f7;
+    padding: 30px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     background-image: url('/images/japanese school.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.register-container {
+    max-width: 400px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #d4dee5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 32px 30px 35px;
+}
+
+h2 {
+    color: #2c4e6e;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #ffffff;
+    transition: all 0.2s;
+    margin-bottom: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #5b8aac;
+    box-shadow: 0 0 0 3px rgba(91, 138, 172, 0.15);
+}
+
+button {
+    background: #5b8aac;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+    margin: 8px 0 20px;
+}
+
+button:hover {
+    background: #2c4e6e;
+}
+
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #475569;
+    margin-top: 5px;
+}
+
+.login-link a {
+    color: #5b8aac;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    color: #2c4e6e;
+    text-decoration: underline;
+}
+
+.message-area {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    background: #f8fafc;
+    border-left: 3px solid #94a3b8;
+    color: #334155;
+    display: none;
+}
+
+.message-area.show {
+    display: block;
+}
+
+.error-msg {
+    background: #fef2f2;
+    border-left-color: #dc2626;
+    color: #b91c1c;
+}
+
+.success-msg {
+    background: #f0fdf4;
+    border-left-color: #22c55e;
+    color: #166534;
+}
