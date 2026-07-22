@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +25,6 @@ public class QuizController {
 
 	@Autowired
 	private QuizService quizservice;
-//	
-//	.QuizService
 
 	@PostMapping("/add")
 	public ResponseEntity<?> saveQuize(@RequestBody Quiz quiz) {
@@ -49,28 +46,26 @@ public class QuizController {
 		return ResponseEntity.ok(q);
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<?> updateById(@RequestBody Quiz quiz, @PathVariable int id) {
-		String s = quizservice.modifyById(quiz, id);
-		return ResponseEntity.ok(s);
-
+	@DeleteMapping("/delete-quiz/{id}")
+	public ResponseEntity<?> deleteQuiz(@PathVariable int id) {
+	    quizservice.removeRecord(id);
+	    return ResponseEntity.ok("Quiz deleted successfully");
 	}
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteRecord(@PathVariable int id) {
-		quizservice.removeRecord(id);
-		return ResponseEntity.ok("Deleted Successfully");
-	}
-
+	
 	@PostMapping("/submit")
 	public ResponseEntity<?> submitQuiz(@RequestBody QuizSubmitRequest request, HttpServletRequest httpRequest) {
 
-		// 🔥 Get email from JWT filter
-		String email = (String) httpRequest.getAttribute("email");
+	    String email = (String) httpRequest.getAttribute("email");
 
-		int score = quizservice.evaluateQuiz(request, email);
+	    System.out.println("EMAIL FROM TOKEN: " + email);
+	    System.out.println("QUIZ ID: " + request.getQuizId());
+	    System.out.println("ANSWERS: " + request.getAnswers());
 
-		return ResponseEntity.ok("Your Score: " + score);
+	    int score = quizservice.evaluateQuiz(request, email);
+
+	    System.out.println("FINAL SCORE: " + score);
+
+	    return ResponseEntity.ok("Your Score: " + score);
 	}
 
 	@GetMapping("/lesson/{lessonId}/quizzes")

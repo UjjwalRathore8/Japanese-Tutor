@@ -145,7 +145,9 @@ function loadQuizzes() {
                     const quizId = btn.getAttribute('data-quiz-id');
                     if (quizId) {
                         localStorage.setItem("quizId", quizId);
-                        window.location.href = `/quiz.html?quizId=${quizId}`;
+                        //window.location.href = `/quiz.html?quizId=${quizId}`;
+						window.location.href = `/quiz-attempt.html?id=${quizId}`;
+						
                     }
                 });
             });
@@ -175,14 +177,22 @@ if (resultsBtn) resultsBtn.addEventListener("click", goToResults);
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) logoutBtn.addEventListener("click", logout);
 
+
+const leaderboardBtn = document.getElementById("leaderboardBtn");
+if (leaderboardBtn) {
+    leaderboardBtn.addEventListener("click", function () {
+        window.location.href = "/leaderboard.html";
+});
+}
+
 // Keep global functions for potential inline usage
 window.goResult = goToResults;
 window.logout = logout;
-window.startQuiz = function(id) {
-    if (id) {
-        localStorage.setItem("quizId", id);
-        window.location.href = `/quiz.html?quizId=${id}`;
-    }
+
+	window.startQuiz = function(id) {
+	    if (id) {
+	        window.location.href = `/quiz-attempt.html?id=${id}`;
+	    }
 };
 window.openLesson = function(id) {
     if (id) {

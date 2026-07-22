@@ -59,8 +59,9 @@ fetch("/Result/my", {
     data.forEach((result, index) => {
         // Safely access nested properties
         const quizTitle = result.quiz && result.quiz.title ? result.quiz.title : "Untitled Quiz";
-        const score = result.score !== undefined && result.score !== null ? result.score : "N/A";
-        
+       // const score = result.score !== undefined && result.score !== null ? result.score : "N/A";
+	   const score = result.score ?? result.marks ?? result.totalScore ?? result.resultScore ?? "N/A";
+	   
         // Format score display
         let scoreDisplay = score;
         let scoreUnit = "points";

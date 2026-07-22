@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.exception.InvalidCredentialsException;
 import com.example.demo.exception.ResourceNotFoundException;
@@ -20,6 +21,10 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
 	public User userAdd(User user) {
+		if (user.getRole() == null) {
+			user.setRole(Role.STUDENT);
+		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userrepository.save(user);
 	}
 
@@ -43,7 +48,6 @@ public class UserService {
 	public User findByEmail(String email) {
 		User s = userrepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 		return s;
-
 	}
 
 	public List<User> allUser() {

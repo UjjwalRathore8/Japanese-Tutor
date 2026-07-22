@@ -45,14 +45,34 @@ async function login() {
             body: JSON.stringify({ email, password })
         });
 
-        const data = await response.json();
+        //const data = await response.json();
+		if (!response.ok) {
+		    const error = await response.text();
+		    showMessage(error, true);
+		    return;
+		}
 
-        if (data && data.token) {
-            localStorage.setItem("token", data.token);
-            showMessage('Login successful! Redirecting...', false);
-            setTimeout(() => {
-                window.location.href = "/dashboard.html";
-            }, 800);
+		const data = await response.json();
+
+		if (data && data.token) {
+		    localStorage.setItem("token", data.token);
+
+		    // ✅ decode role from token
+		    const payload = JSON.parse(atob(data.token.split('.')[1]));
+		    const role = payload.role;
+
+		    showMessage('Login successful! Redirecting...', false);
+
+		    setTimeout(() => {
+		        if (role === "ADMIN") {
+		            window.location.href = "/admin-dashboard.html";
+		        } else if (role === "TRAINER") {
+		            window.location.href = "/trainer-dashboard.html";
+		        } else {
+		            window.location.href = "/dashboard.html";
+				//	/student-dashboard.html
+		        }
+		    }, 800);
         } else {
             showMessage('Login failed: Invalid credentials', true);
         }

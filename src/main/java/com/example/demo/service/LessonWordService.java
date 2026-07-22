@@ -14,7 +14,7 @@ public class LessonWordService {
 	@Autowired
 	private LessonWordRepository lessonWordRepository;
 
-	// SAVE WORD (IMPORTANT PART)
+	// Save Word
 	public LessonWord saveWord(LessonWord word) {
 		return lessonWordRepository.save(word);
 	}

@@ -18,12 +18,17 @@
             .replace(/'/g, "&#39;");
     }
     
-    // Helper: Render HTML content safely using innerHTML (trusted backend content)
-    function renderHtmlContent(htmlString) {
-        if (!htmlString) return '<span class="empty-content">— No written content —</span>';
-        return htmlString;
-    }
-    
+	function renderHtmlContent(htmlString) {
+	    if (!htmlString) {
+	        return '<span class="empty-content">— No written content —</span>';
+	    }
+
+	    // Preserve trainer-entered line breaks
+	    return htmlString.replace(/\r?\n/g, "<br>");
+	}
+	
+	
+	
     // Show error state
     function showError(title, message, showRetry = false, showDashboard = true) {
         contentArea.innerHTML = `
@@ -69,7 +74,7 @@
         
         // IMPORTANT: Render HTML content directly (not escaped)
         const renderedContent = renderHtmlContent(rawContent);
-        
+	   //const renderedContent = rawContent.replace(/\n/g, "<br>");
         const html = `
             <div class="lesson-card">
                 <div class="lesson-header">
@@ -98,10 +103,8 @@
         contentArea.innerHTML = html;
     }
     
-	
-	
-	function speak(text) {
-	    speechSynthesis.cancel(); // stops previous audio
+	function speakJapanese(text) {
+	    speechSynthesis.cancel();
 
 	    const utterance = new SpeechSynthesisUtterance(text);
 	    utterance.lang = "ja-JP";
@@ -111,7 +114,7 @@
 	    speechSynthesis.speak(utterance);
 	}
 
-	window.speak = speak;
+	window.speakJapanese = speakJapanese;
 	
 	
 	
@@ -141,9 +144,9 @@
 	                <p>${w.meaning}</p>
 	                <p><b>Romaji:</b> ${w.romaji}</p>
 
-	                <button onclick="speak('${w.romaji}')">
-	                    🔊 Speak
-	                </button>
+					<button onclick="speakJapanese('${w.word}')">
+					    🔊 Speak
+					</button>
 	            </div>
 	        `;
 	    });
@@ -152,15 +155,6 @@
 
 	    contentArea.insertAdjacentHTML("beforeend", html);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
     // Fetch lesson from API
     function fetchLessonContent() {

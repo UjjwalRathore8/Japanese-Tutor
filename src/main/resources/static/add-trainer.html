@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Trainer | Admin Console</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-image: url('/images/at2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+        }
+
+        /* Main card */
+        .card {
+            max-width: 560px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Header */
+        .card-header {
+            padding: 1.75rem 2rem;
+            background: #0f172a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-header h2 {
+            color: #ffffff;
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-header h2::before {
+            content: "＋";
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.12);
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.2rem;
+        }
+
+        .header-sub {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            letter-spacing: 0.2px;
+        }
+
+        /* Form body */
+        .card-body {
+            padding: 2rem 2rem 2rem 2rem;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            outline: none;
+            color: #0f172a;
+        }
+
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        /* helper text */
+        .helper-text {
+            font-size: 0.7rem;
+            color: #5b6e8c;
+            margin-top: 0.4rem;
+            margin-left: 0.25rem;
+        }
+
+        /* Action button */
+        .btn-submit {
+            background: #0f172a;
+            width: 100%;
+            border: none;
+            padding: 0.9rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.75rem;
+            font-family: inherit;
+            letter-spacing: 0.2px;
+        }
+
+        .btn-submit:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px -8px rgba(15, 23, 42, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* message alert */
+        .message-box {
+            margin-top: 1.5rem;
+            padding: 0.85rem 1rem;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .message-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .message-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .message-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* back link */
+        .back-nav {
+            margin-top: 1.5rem;
+            text-align: center;
+            padding-top: 0.5rem;
+        }
+
+        .back-link {
+            font-size: 0.8rem;
+            color: #475569;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            color: #0f172a;
+            text-decoration: underline;
+        }
+
+        /* loading spinner */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* small responsive */
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
+            }
+            .card-body {
+                padding: 1.5rem;
+            }
+            .card-header {
+                padding: 1.25rem 1.5rem;
+            }
+            .card-header h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Add Trainer</h2>
+        <div class="header-sub">Create a new trainer account · Administrator access</div>
+    </div>
+    
+    <div class="card-body">
+        <!-- Trainer Name -->
+        <div class="form-group">
+            <label class="form-label">Full name</label>
+            <div class="input-wrapper">
+                <input type="text" id="trainerName" class="form-input" placeholder="e.g., Sarah Mitchell" autocomplete="off">
+            </div>
+        </div>
+        
+        <!-- Email -->
+        <div class="form-group">
+            <label class="form-label">Email address</label>
+            <div class="input-wrapper">
+                <input type="email" id="trainerEmail" class="form-input" placeholder="trainer@company.com" autocomplete="off">
+            </div>
+        </div>
+        
+        <!-- Password -->
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+                <input type="password" id="trainerPassword" class="form-input" placeholder="··········">
+            </div>
+            <div class="helper-text">Use at least 6 characters for security</div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button id="addTrainerBtn" class="btn-submit">
+            <span>＋</span> Create trainer
+        </button>
+        
+        <!-- Message panel -->
+        <div id="messagePanel" class="message-box" style="display: none;"></div>
+        
+        <!-- Navigation hint -->
+        <div class="back-nav">
+            <a href="/dashboard.html" id="dashboardLink" class="back-link">← Return to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ========== 1. AUTHENTICATION & AUTHORIZATION (admin only) ==========
+        const token = localStorage.getItem("token");
+        
+        if (!token) {
+            alert("Authentication required. Please log in as Admin.");
+            window.location.href = "/login.html";
+            return;
+        }
+        
+        // decode JWT payload safely (original logic preserved)
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error("JWT decode error", e);
+                return null;
+            }
+        }
+        
+        const decoded = parseJwt(token);
+        if (!decoded || decoded.role !== "ADMIN") {
+            alert("Access Denied: Admin only. You will be redirected.");
+            localStorage.removeItem("token");
+            window.location.href = "/login.html";
+            return;
+        }
+        
+        // ========== 2. DOM Elements ==========
+        const nameInput = document.getElementById("trainerName");
+        const emailInput = document.getElementById("trainerEmail");
+        const passwordInput = document.getElementById("trainerPassword");
+        const submitBtn = document.getElementById("addTrainerBtn");
+        const messageDiv = document.getElementById("messagePanel");
+        
+        // Helper: show styled messages
+        function setMessage(text, type) {
+            messageDiv.style.display = "block";
+            messageDiv.textContent = text;
+            messageDiv.className = "message-box";
+            if (type === "success") {
+                messageDiv.classList.add("message-success");
+            } else if (type === "error") {
+                messageDiv.classList.add("message-error");
+            } else {
+                messageDiv.classList.add("message-info");
+            }
+            // auto hide success after 4 seconds?
+            if (type === "success") {
+                setTimeout(() => {
+                    if (messageDiv.textContent === text) {
+                        messageDiv.style.display = "none";
+                        messageDiv.textContent = "";
+                    }
+                }, 4500);
+            }
+        }
+        
+        function clearMessage() {
+            messageDiv.style.display = "none";
+            messageDiv.textContent = "";
+            messageDiv.className = "message-box";
+        }
+        
+        // Loading state
+        function setLoading(isLoading) {
+            if (isLoading) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<span class="spinner"></span> Creating trainer...`;
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>＋</span> Create trainer`;
+            }
+        }
+        
+        // reset form fields after success
+        function resetForm() {
+            nameInput.value = "";
+            emailInput.value = "";
+            passwordInput.value = "";
+            nameInput.focus();
+        }
+        
+        // ========== 3. Core function: add trainer (API call with original endpoint) ==========
+        async function addTrainerHandler() {
+            // get trimmed values
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            
+            // validations (user friendly but professional)
+            if (!name) {
+                setMessage("Please enter the trainer's full name.", "error");
+                nameInput.focus();
+                return;
+            }
+            if (!email) {
+                setMessage("Email address is required.", "error");
+                emailInput.focus();
+                return;
+            }
+            // Standard email regex
+            const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                setMessage("Enter a valid email address (e.g., name@example.com).", "error");
+                emailInput.focus();
+                return;
+            }
+            if (!password) {
+                setMessage("Password cannot be empty.", "error");
+                passwordInput.focus();
+                return;
+            }
+            if (password.length < 6) {
+                setMessage("Password must be at least 6 characters long.", "error");
+                passwordInput.focus();
+                return;
+            }
+            
+            // prepare payload
+            const trainerPayload = {
+                name: name,
+                email: email,
+                password: password
+            };
+            
+            setLoading(true);
+            clearMessage();
+            setMessage("Sending request...", "info");
+            
+            try {
+                const response = await fetch("/admin/add-trainer", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
+                    body: JSON.stringify(trainerPayload)
+                });
+                
+                let responseMessage;
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const jsonData = await response.json();
+                    responseMessage = jsonData.message || jsonData.error || "Operation completed";
+                } else {
+                    responseMessage = await response.text();
+                }
+                
+                if (response.ok) {
+                    setMessage(responseMessage || "Trainer added successfully!", "success");
+                    resetForm();
+                } else {
+                    setMessage(responseMessage || "Failed to add trainer. Please verify permissions or contact support.", "error");
+                }
+            } catch (err) {
+                console.error("Add trainer fetch error: ", err);
+                setMessage("Network error: Unable to connect to server. Check your connection.", "error");
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        // ========== 4. Attach event listeners ==========
+        if (submitBtn) {
+            submitBtn.addEventListener("click", addTrainerHandler);
+        }
+        
+        // Enter key submission on any of the three fields
+        const fields = [nameInput, emailInput, passwordInput];
+        fields.forEach(field => {
+            if (field) {
+                field.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        addTrainerHandler();
+                    }
+                });
+            }
+        });
+        
+        // Dashboard link (preserve original behavior but prevent default to ensure correct path)
+        const dashboardLink = document.getElementById("dashboardLink");
+        if (dashboardLink) {
+            dashboardLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                window.location.href = "/admin-dashboard.html";
+            });
+        }
+        
+        // initial focus
+        if (nameInput) nameInput.focus();
+        
+        // add extra safety: token expiry? (original logic already ensures role, but we keep logout clean)
+        // expose standard logout (only if needed but not mandatory)
+        window.logout = function() {
+            localStorage.removeItem("token");
+            window.location.href = "/login.html";
+        };
+    })();
+</script>
+</body>
+</html>

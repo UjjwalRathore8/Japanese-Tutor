@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Admin Dashboard | FitFlow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', 'Inter', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f0f4fc 0%, #e9eef5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            margin: 0;
+            background-image: url('/images/ad2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+        }
+
+        /* main card container */
+        .dashboard-container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(0px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* header area */
+        .admin-header {
+            background: #1e2a3e;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .title-section {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #cbd5e6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .badge-role {
+            background: rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #cbdff2;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        /* card content */
+        .dashboard-content {
+            padding: 2rem 2rem 2.2rem 2rem;
+        }
+
+        /* welcome card */
+        .welcome-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.6rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef2f9;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f1825;
+            margin-bottom: 0.4rem;
+        }
+
+        .greeting span {
+            background: linear-gradient(120deg, #1e3a8a, #2563eb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .sub-greeting {
+            color: #4b5565;
+            font-size: 0.95rem;
+            border-left: 3px solid #3b82f6;
+            padding-left: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* action buttons grid */
+        .action-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .dashboard-btn {
+            flex: 1;
+            min-width: 180px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            background: white;
+            border: none;
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            color: #1f2a44;
+            background: #ffffff;
+        }
+
+        .dashboard-btn i {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+
+        .btn-add {
+            background: #fef9e8;
+            border-color: #fed7aa;
+            color: #b45309;
+        }
+
+        .btn-add i {
+            color: #e07c1f;
+        }
+
+        .btn-student {
+            background: #ecfdf5;
+            border-color: #b6e0cc;
+            color: #065f46;
+        }
+
+        .btn-student i {
+            color: #059669;
+        }
+
+        .btn-logout {
+            background: #fff1f0;
+            border-color: #ffcdc9;
+            color: #9b1c1c;
+        }
+
+        .btn-logout i {
+            color: #dc2626;
+        }
+
+        /* hover effects */
+        .dashboard-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.2);
+            filter: brightness(0.98);
+        }
+
+        .btn-add:hover {
+            background: #ffedd5;
+            border-color: #fbbf24;
+        }
+
+        .btn-student:hover {
+            background: #d1fae5;
+        }
+
+        .btn-logout:hover {
+            background: #fee2e2;
+        }
+
+        /* quick stats or info */
+        .info-panel {
+            margin-top: 2.8rem;
+            background: #f8fafd;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: #2d3a4b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .shield {
+            background: #e6f0ff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1e4a8a;
+        }
+
+        /* responsive touches */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            .dashboard-content {
+                padding: 1.5rem;
+            }
+            .action-grid {
+                flex-direction: column;
+            }
+            .dashboard-btn {
+                justify-content: center;
+            }
+            .title-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .welcome-card {
+                padding: 1.2rem;
+            }
+            .greeting {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* subtle animation */
+        .dashboard-container {
+            animation: fadeSlideUp 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        button {
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="admin-header">
+        <div class="title-section">
+            <h1>⚡ Admin Dashboard</h1>
+            <div class="badge-role">🔐 ADMINISTRATOR</div>
+        </div>
+    </div>
+    
+    <div class="dashboard-content">
+        <!-- welcome block with admin context -->
+        <div class="welcome-card">
+            <div class="greeting">
+                Welcome back, <span>Admin</span> 👋
+            </div>
+            <div class="sub-greeting">
+                Manage trainers, oversee student progress, and control access from one place.
+            </div>
+        </div>
+
+        <!-- primary action buttons - clean, minimal, efficient -->
+        <div class="action-grid">
+            <button class="dashboard-btn btn-add" id="addTrainerBtn">
+                <i>👥 +</i> Add Trainer
+            </button>
+            <button class="dashboard-btn btn-student" id="studentDashboardBtn">
+                <i>📚</i> Student Dashboard
+            </button>
+            <button class="dashboard-btn btn-logout" id="logoutBtn">
+                <i>🚪</i> Logout
+            </button>
+        </div>
+
+        <!-- tiny informative panel (no extra logic, just friendly ui) -->
+        <div class="info-panel">
+            <div class="info-text">
+                🛡️ <span>You have full administrative access.</span>
+            </div>
+            <div class="shield">secure session</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- AUTHENTICATION & ROLE VERIFICATION (preserved original logic) ----------
+    const token = localStorage.getItem("token");
+
+    // Redirect to login if token missing
+    if (!token) {
+        window.location.href = "/login.html";
+    }
+
+    // Safely decode JWT payload & check role (admin only)
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(atob(base64));
+        const role = payload.role;
+
+        if (role !== "ADMIN") {
+            alert("Access Denied: Admin only");
+            window.location.href = "/dashboard.html";
+        }
+    } catch (error) {
+        console.error("Invalid token structure");
+        localStorage.removeItem("token");
+        window.location.href = "/login.html";
+    }
+
+    // ----- CLEAN FUNCTIONALITIES (no overcomplication) -----
+    // 1. Add Trainer button -> navigate to /add-trainer.html
+    const addTrainerBtn = document.getElementById("addTrainerBtn");
+    if (addTrainerBtn) {
+        addTrainerBtn.addEventListener("click", function() {
+            window.location.href = "/add-trainer.html";
+        });
+    }
+
+    // 2. Student Dashboard button -> navigate to /dashboard.html
+    const studentDashboardBtn = document.getElementById("studentDashboardBtn");
+    if (studentDashboardBtn) {
+        studentDashboardBtn.addEventListener("click", function() {
+            window.location.href = "/dashboard.html";
+        });
+    }
+
+    // 3. Logout function -> remove token & redirect to login
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function() {
+            localStorage.removeItem("token");
+            window.location.href = "/login.html";
+        });
+    }
+
+    // (Optional: provide same global logout function if needed anywhere else but consistent)
+    window.logout = function() {
+        localStorage.removeItem("token");
+        window.location.href = "/login.html";
+    };
+</script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.List;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.entity.Result;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.ResultService;
 
@@ -23,23 +21,34 @@ public class ResultController {
 	@Autowired
 	private ResultService resultservice;
 	
+//	@PostMapping("/add")
+//	public ResponseEntity<?> addResult(@RequestBody Result result, HttpServletRequest request) {
+//
+//	    String token = request.getHeader("Authorization").substring(7);
+//	    String email = JwtUtil.extractEmail(token);
+//
+//	    Result savedResult = resultservice.addResultForUser(result, email);
+//
+//	    return ResponseEntity.ok(savedResult);
+//	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllResults() {
 	    return ResponseEntity.ok(resultservice.getAllResults());
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable int id) {
-	    return ResponseEntity.ok(resultservice.getResultById(id));
-	}
+//	@GetMapping("/{id}")
+//	public ResponseEntity<?> getById(@PathVariable int id) {
+//	    return ResponseEntity.ok(resultservice.getResultById(id));
+//	}
 	
-	@GetMapping("/user/{userId}")
-	public ResponseEntity<?> getResultsByUser(@PathVariable Integer userId) {
-
-	    List<Result> results = resultservice.getResultsByUser(userId);
-
-	    return ResponseEntity.ok(results);
-	}
+//	@GetMapping("/user/{userId}")
+//	public ResponseEntity<?> getResultsByUser(@PathVariable Integer userId) {
+//
+//	    List<Result> results = resultservice.getResultsByUser(userId);
+//
+//	    return ResponseEntity.ok(results);
+//	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> removeById(@PathVariable int id)
@@ -56,5 +65,10 @@ public class ResultController {
 
 	    return ResponseEntity.ok(resultservice.getResultsByEmail(email));
 	}	
+	
+	@GetMapping("/top")
+	public ResponseEntity<?> getTopResults() {
+	    return ResponseEntity.ok(resultservice.getTopResults());
+	}
 	
 }

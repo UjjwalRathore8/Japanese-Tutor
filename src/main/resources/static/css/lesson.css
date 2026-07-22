@@ -102,6 +102,21 @@ body {
     border: 1px solid #eef3fc;
 }
 
+/*
+.lesson-body {
+    background: #fafcff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #eef3fc;
+
+    white-space: pre-line;
+    line-height: 1.8;
+}
+*/
+.lesson-body.multiline {
+    white-space: pre-line;
+    line-height: 1.8;
+}
 /* ================= PRONUNCIATION SECTION (FIXED) ================= */
 .pronunciation-section {
     margin-top: 2rem;

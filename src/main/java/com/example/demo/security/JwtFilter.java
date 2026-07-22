@@ -17,13 +17,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		// ✅ STEP 1: Allow public endpoints (login/register)
 		String path = request.getRequestURI();
-		if (path.startsWith("/User/auth") || path.endsWith(".html") || path.startsWith("/Quiz/all")
-				|| path.startsWith("/Quiz/get") || path.startsWith("/lesson/all") || path.startsWith("/lesson/")
-				|| path.startsWith("/Result/user")
+		if (path.startsWith("/User/auth") || path.equals("/login.html") || path.equals("/register.html")
+				|| path.equals("/")
 
-				|| path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/images/")
-				|| path.endsWith(".html") || path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".ico")
-				|| path.startsWith("/lessonwords"))
+				/*|| path.startsWith("/Quiz/all") || path.startsWith("/Quiz/get") || path.startsWith("/lesson/all")
+				|| path.startsWith("/lesson/") || path.startsWith("/Result/user")*/ || path.startsWith("/css/")
+				|| path.startsWith("/js/") || path.startsWith("/images/") || path.endsWith(".html")
+				|| path.endsWith(".css") || path.endsWith(".js") || path.endsWith(".ico")
+				//|| path.startsWith("/lessonwords")
+				)
 
 		{
 			filterChain.doFilter(request, response);
@@ -47,7 +49,23 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 		// OPTIONAL: extract email if needed
 		String email = JwtUtil.extractEmail(token);
+		String role = JwtUtil.extractRole(token);
 		request.setAttribute("email", email);
+		request.setAttribute("role", role);
+
+		// Admin protection
+		if (path.startsWith("/admin") && !role.equals("ADMIN")) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			response.getWriter().write("Access Denied: Admin only");
+			return;
+		}
+
+		// Trainer protection
+		if (path.startsWith("/trainer") && !(role.equals("TRAINER") || role.equals("ADMIN"))) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			response.getWriter().write("Access Denied: Trainer only");
+			return;
+		}
 
 		filterChain.doFilter(request, response);
 

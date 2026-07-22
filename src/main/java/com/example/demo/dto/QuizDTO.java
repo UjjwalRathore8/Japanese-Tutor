@@ -61,6 +61,4 @@ public class QuizDTO {
 		this.questions = questions;
 	}
 	
-	
-	
 }

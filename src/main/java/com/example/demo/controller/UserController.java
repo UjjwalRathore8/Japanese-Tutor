@@ -31,13 +31,13 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody User user) {
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		User savedUser = userservice.userAdd(user);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
 	}
-
+	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody User loginUser) {
 
@@ -54,8 +54,8 @@ public class UserController {
 		if (!passwordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
 			return ResponseEntity.status(401).body("Invalid password");
 		}
-		// ✅ REAL TOKEN
-		String token = JwtUtil.generateToken(user.getEmail());
+		// Real Token
+		String token = JwtUtil.generateToken(user.getEmail(), user.getRole().name());
 
 		LoginResponse response = new LoginResponse(token, user);
 

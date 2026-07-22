@@ -1,11 +1,4 @@
-//package com.example.demo.config;
-//
-//public class WebConfig {
-//
-//}
-
-
-package com.example.demo.config; // match your package
+package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -22,7 +22,6 @@ public class LessonWordController {
 	@Autowired
 	private LessonWordService lessonWordService;
 
-	// ✅ ADD NEW WORD (MAIN API)
     @PostMapping("/add")
     public LessonWord addWord(@RequestBody LessonWord word) {
         return lessonWordService.saveWord(word);

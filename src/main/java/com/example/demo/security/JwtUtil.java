@@ -12,9 +12,9 @@ public class JwtUtil {
 
 	private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("mysecretkeymysecretkeymysecretkey12".getBytes());
 
-	public static String generateToken(String email) {
+	public static String generateToken(String email, String role) {
 
-		return Jwts.builder().setSubject(email) // store email
+		return Jwts.builder().setSubject(email).claim("role", role) // store email
 				.setIssuedAt(new Date()) // current time
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60) // 1 hour
 				).signWith(SECRET_KEY) // sign token
@@ -24,8 +24,12 @@ public class JwtUtil {
 	public static String extractEmail(String token) {
 
 		Claims claims = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
-
 		return claims.getSubject(); // returns email
+	}
+
+	public static String extractRole(String token) {
+		return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody().get("role",
+				String.class);
 	}
 
 	public static boolean validateToken(String token) {
